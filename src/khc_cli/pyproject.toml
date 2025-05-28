@@ -1,6 +1,6 @@
 [project]
 name = "khc-cli"
-dynamic = ["version"]
+version = "0.1.0"
 description = "CLI tool for curating and analyzing Awesome lists, focusing on Open Sustainable Technology."
 readme = "README.md"
 requires-python = ">=3.8, <3.12"
@@ -83,8 +83,9 @@ required-imports = ["from __future__ import annotations"]
 [tool.hatch.version]
 source = "vcs"
 
-# [tool.hatch.build.targets.wheel]
-# packages = ["src/khc_cli"]
+[tool.hatch.build.targets.wheel]
+packages = ["src/khc_cli"]
+
 
 # Optionnel : Configuration pour sdist si vous voulez être explicite
 [tool.hatch.build.targets.sdist]
