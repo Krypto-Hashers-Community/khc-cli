@@ -47,7 +47,7 @@ dependencies = [
 ]
 
 [project.scripts]
-khc-cli = "khc_cli.app:app"
+khc-cli = "khc_cli.main:app"
 
 [project.optional-dependencies]
 dev = [
