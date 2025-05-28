@@ -81,6 +81,28 @@ Run command
 khc-cli --help
 ```
 
+Check Python Environment
+
+```bash
+which python
+```
+
+It should point to your `.venv` directory. If not, activate your virtual environment:
+
+```bash
+source .venv/bin/activate
+```
+
+Verify Import Path
+
+Run Python interactively and check if your module is discoverable
+
+```bash
+python
+>>> import sys
+>>> print(sys.path)
+>>> import khc_cli
+```
 
 * Ensure that dependencies, versioning, and enty points are correclty set.
 

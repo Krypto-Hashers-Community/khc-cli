@@ -639,7 +639,7 @@ def run_etl_pipeline(
 
 @app.command()
 def main(
-    awesome_repo_url: Annotated[str, typer.Option(help="URL of the Awesome list GitHub repository.")] = "https://github.com/protontypes/open-sustainable-technology",
+    awesome_repo_url: Annotated[str, typer.Option(help="URL of the Awesome list GitHub repository.")] = "https://github.com/Krypto-Hashers-Community/khc-cli",
     awesome_readme_filename: Annotated[str, typer.Option(help="Filename of the README in the Awesome list repository.")] = "README.md",
     local_readme_path: Annotated[Path, typer.Option(help="Local path to save/read the Awesome README.", dir_okay=False, writable=True)] = Path("./.awesome-cache.md"),
     projects_csv_path: Annotated[Path, typer.Option(help="Output path for the projects CSV file.", dir_okay=False, writable=True)] = Path("./csv/projects.csv"),
