@@ -28,16 +28,16 @@ with DAG(
     run_etl = BashOperator(
         task_id="run_khc_cli_etl",
         bash_command=(
+            f"source /opt/airflow/.venv/bin/activate && "
             f"khc-cli "
             f"--awesome-repo-url '{AWESOME_REPO_URL}' "
             f"--awesome-readme-filename 'README.md' "
             f"--local-readme-path '{PATH_TO_LOCAL_README}' "
             f"--projects-csv-path '{PATH_TO_PROJECTS_CSV}' "
             f"--orgs-csv-path '{PATH_TO_ORGS_CSV}' "
-            # Utilisation d'une connexion Airflow nommée 'github_api' pour la clé
-            # Assurez-vous que cette connexion existe dans Airflow et que le champ 'password' contient votre clé.
             f"--github-api-key '{{{{ conn.github_api.password }}}}' "
         ),
+
         # Vous pouvez spécifier des variables d'environnement si nécessaire
         # env={
         #     'SOME_ENV_VAR': 'value'
