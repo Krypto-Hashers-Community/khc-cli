@@ -1,9 +1,7 @@
-# KHC CLI
-
-![Screen Capture of KHC CLI](docs/images/KHC_CLI.png)
+## KHC CLI
 
 ## Open Sustainable Technology 
-[<img src="earth.png" align="right" width="350">](https://tabletopwhale.com/)__A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.__ <br> <br>_Earth's uniqueness in creating a stable environment for life in a completely hostile space is a miracle. Various life forms have taken billions of years to build up the natural resources humans depend on, such as a protective atmosphere, fertile soil, stable seasons, and clean drinking water. As a movement to democratize technology development and knowledge creation, open source has the potential to become the central driver in preserving this stability. Open Sustainable Technology's mission is to gather projects that preserve natural ecosystems through open technology, methods, data, intelligence, knowledge or tools._
+__A directory and analysis of the open source ecosystem in the areas of climate change, sustainable energy, biodiversity and natural resources.__ <br> <br>_Earth's uniqueness in creating a stable environment for life in a completely hostile space is a miracle. Various life forms have taken billions of years to build up the natural resources humans depend on, such as a protective atmosphere, fertile soil, stable seasons, and clean drinking water. As a movement to democratize technology development and knowledge creation, open source has the potential to become the central driver in preserving this stability. Open Sustainable Technology's mission is to gather projects that preserve natural ecosystems through open technology, methods, data, intelligence, knowledge or tools._
 
 ---
 
@@ -2680,17 +2678,3 @@ parameter values.
 ## References to the Open Source Community
 
 Thanks to the Open Source Community that is involved in to gather projects that preserve natural ecosystems through open technology, methods, data, intelligence, knowledge or tools.
-
-### Contributors
-<a href="https://github.com/protontypes/open-sustainable-technology/graphs/contributors">
-  <img width="70%" src="https://contrib.rocks/image?repo=protontypes/open-sustainable-technology" />
-</a>
-
-### Artwork and License
-Animation created with [An Animated Map of the Earth](https://github.com/eleanorlutz/earth_atlas_of_space) by [Eleanor Lutz](https://eleanorlutz.com/)
-
-The artwork included in this repository are shared under a Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License.
-
-This work and all contributions to it are released into terms of the Creative Commons Attribution 4.0 International if not otherwise noted.
-
-[![CC-BY-4.0 license](https://licensebuttons.net/l/by-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-sa/4.0/)
