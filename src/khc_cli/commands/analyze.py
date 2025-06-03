@@ -1,4 +1,4 @@
-"""Commandes d'analyse de repositories GitHub."""
+"""Commands for analyzing GitHub repositories and Awesome lists."""
 
 import typer
 import logging
@@ -12,23 +12,24 @@ from urllib.parse import urlparse
 
 from khc_cli.github_client import GitHubClient
 from khc_cli.utils.helpers import crawl_github_dependents
+from khc_cli.utils.template_loader import get_awesome_list_template
 
 app = typer.Typer()
 console = Console()
 LOGGER = logging.getLogger(__name__)
-# Charger les variables d'environnement à partir du fichier .env
+# Load environment variables from .env file
 load_dotenv()
 
 @app.command()
 def repo(
-    repo_name: Annotated[str, typer.Argument(help="Nom du repository (ex: owner/repo)")],
-    output_format: Annotated[str, typer.Option("--format", "-f", help="Format de sortie: table, json")] = "table",
+    repo_name: Annotated[str, typer.Argument(help="Repository name (e.g., owner/repo)")],
+    output_format: Annotated[str, typer.Option("--format", "-f", help="Output format: table, json")] = "table",
     github_api_key: Annotated[str, typer.Option(envvar="GITHUB_API_KEY", help="GitHub API Key")] = None,
 ):
-    """Analyser un repository spécifique."""
+    """Analyze a specific GitHub repository."""
     
     with Progress() as progress:
-        task = progress.add_task("Analyse du repository...", total=100)
+        task = progress.add_task("Analyzing repository...", total=100)
         
         github_client = GitHubClient(github_api_key)
         
@@ -36,12 +37,12 @@ def repo(
             repo = github_client.client.get_repo(repo_name)
             
             if not repo:
-                console.print(f"[red]Repository {repo_name} non trouvé[/red]")
+                console.print(f"[red]Repository {repo_name} not found[/red]")
                 raise typer.Exit(1)
             
             progress.update(task, advance=50)
         
-            # Collecter les informations
+            # Collect information
             info = {
                 "name": repo.name,
                 "stars": repo.stargazers_count,
@@ -54,16 +55,16 @@ def repo(
             
             progress.update(task, advance=50)
         except Exception as e:
-            console.print(f"[red]Erreur lors de l'analyse du repository {repo_name}: {e}[/red]")
+            console.print(f"[red]Error analyzing repository {repo_name}: {e}[/red]")
             raise typer.Exit(1)
             
         if output_format == "json":
             import json
             console.print_json(json.dumps(info))
         else:
-            table = Table(title=f"Analyse de {repo_name}")
-            table.add_column("Propriété", style="cyan")
-            table.add_column("Valeur", style="green")
+            table = Table(title=f"Analysis of {repo_name}")
+            table.add_column("Property", style="cyan")
+            table.add_column("Value", style="green")
             
             for key, value in info.items():
                 table.add_row(key.replace("_", " ").title(), str(value))
@@ -72,26 +73,40 @@ def repo(
 
 @app.command()
 def etl(
-    awesome_repo_url: Annotated[str, typer.Option(help="URL de la liste Awesome")] = "https://api.github.com/repos/Krypto-Hashers-Community/khc-cli/contents/README.md",
-    output_dir: Annotated[Path, typer.Option(help="Répertoire de sortie")] = Path("./csv"),
+    awesome_repo_url: Annotated[str, typer.Option(help="URL of the Awesome list")] = "https://api.github.com/repos/Krypto-Hashers-Community/khc-cli/contents/README.md",
+    output_dir: Annotated[Path, typer.Option(help="Output directory")] = Path("./csv"),
     github_api_key: Annotated[str, typer.Option(envvar="GITHUB_API_KEY", help="GitHub API Key")] = None,
+    use_template: Annotated[bool, typer.Option(help="Use Awesome List template for analyze command")]= True,
 ):
-    """Exécute le pipeline ETL pour une liste Awesome."""
+    """Run the ETL pipeline for an Awesome list."""
     from khc_cli.commands.etl import run_etl_pipeline
     
-    # Extraire seulement owner/repo si une URL complète est fournie
+    # Extract only owner/repo if a full URL is provided
     if "github.com" in awesome_repo_url:
         awesome_repo_path = urlparse(awesome_repo_url).path.strip("/")
     else:
-        awesome_repo_path = awesome_repo_url # Déjà au format owner/repo
+        awesome_repo_path = awesome_repo_url # Already in owner/repo format
     
     output_dir.mkdir(parents=True, exist_ok=True)
     
     projects_csv_path = output_dir / "projects.csv"
     orgs_csv_path = output_dir / "github_organizations.csv"
     
-    console.print(f"[green]Démarrage du pipeline ETL pour {awesome_repo_url}[/green]")
-    console.print(f"[green]Sortie vers {projects_csv_path} et {orgs_csv_path}[/green]")
+    console.print(f"[green]Starting ETL pipeline for {awesome_repo_url}[/green]")
+    console.print(f"[green]Output to {projects_csv_path} and {orgs_csv_path}[/green]")
+    
+    # Retrieve the Awesome List template if needed
+    template_content = None
+    if use_template:
+        try:
+            template_content = get_awesome_list_template()
+            (output_dir / ".awesome-cache.md").write_text(template_content, encoding="utf-8")
+            console.print(f"[green]Awesome List template retrieved and stored in {output_dir / '.awesome-cache.md'}[/green]")
+        except Exception as e:
+            console.print(f"[red]Error retrieving Awesome List template: {e}[/red]")
+            raise typer.Exit(1)
+    else:
+        console.print("[yellow]Awesome List template usage disabled[/yellow]")
     
     run_etl_pipeline(
         awesome_repo_url=awesome_repo_url,

@@ -1,18 +1,27 @@
 [project]
 name = "khc-cli"
 version = "0.1.0"
-description = "CLI pour l'analyse et la curation de listes awesome pour les technologies durables et open source"
+description = "CLI tool for analyzing and curating awesome lists focused on sustainable and open source technologies"
 readme = "README.md"
 authors = [
     { name = "Abderrahim Guennoune", email = "aguennoune@outlook.com" }
 ]
-requires-python = ">=3.10.13"
+requires-python = ">=3.10,<4.0"
 license = { file = "LICENSE" }
 classifiers = [
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "License :: OSI Approved :: MIT License", 
     "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Utilities",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Information Technology",
 ]
+keywords = ["cli", "awesome-list", "github", "sustainability", "open-source", "technology", "curation", "analysis"]
 dependencies = [
     "typer[all]>=0.9.0,!=0.16.0",
     "rich>=13.6.0",
@@ -37,6 +46,14 @@ khc-cli = "khc_cli.main:run"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build.targets.wheel]
+include = [
+    "src/khc_cli/resources/*.md",
+]
+
 [tool.black]
 line-length = 100
 target-version = ["py310"]
@@ -50,3 +67,7 @@ line-length = 100
 target-version = "py310"
 select = ["E", "F", "I"]
 ignore = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
